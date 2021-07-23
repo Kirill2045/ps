@@ -1,0 +1,1 @@
+CreateObject("WScript.Shell").Run ("http://vk.com/scriptop")
