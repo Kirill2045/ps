@@ -1,1 +1,1 @@
-cmd
+echo("qwe")
