@@ -28,7 +28,7 @@ if(Test-Path -Path $g){
   echo "Gqwe"
 }
 else{echo "Gasd";$e=$e+'Gasd'}
-
+ 
 $y=($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\");
 if(Test-Path -Path $y){
   Stop-Process -Name browser -ErrorAction SilentlyContinue;
