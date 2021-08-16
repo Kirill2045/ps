@@ -28,7 +28,7 @@ for ($i=0; $i -lt 5; $i++){
     if("WinRAR"-in $arh){
       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
-    elseif("7-Zip"-in $arh){
+    else{
       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
     }
   }
