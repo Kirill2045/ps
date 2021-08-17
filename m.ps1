@@ -36,13 +36,12 @@ for ($i=0; $i -lt 5; $i++){
 #       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
     }
     attrib +H $p
-    $p
+    echo ("____"+$p)
     $ReportEmail.Subject=$lst[$i][1]
-    $s=New-Object Net.Mail.Attachment($p);
-    if("W"-in $arh)
-      {$ReportEmail.Attachments.Add($s)}
-    else
-      {$ReportEmail.Attachments.Add($s)};
+    
+    $s=New-Object Net.Mail.Attachment($p)
+    $ReportEmail.Attachments.Add($s)
+    
     $SMTPInfo.Send($ReportEmail)
   }
   else{
