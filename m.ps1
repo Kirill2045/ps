@@ -26,7 +26,7 @@ for ($i=0; $i -lt 5; $i++){
     echo '+++++++++'
     echo ($lst[$i][0])
 #     $p=$env:TEMP+"\d"+$lst[$i][1]+(Get-Random -max 17071707)+".zip"
-    $p=($env:TEMP+"\"+$lst[1][1]+".zip")
+    $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if("W"-in $arh){
       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
@@ -37,6 +37,7 @@ for ($i=0; $i -lt 5; $i++){
     }
     attrib +H $p
     $p
+    $ReportEmail.Subject=$lst[$i][1]
     $s=New-Object Net.Mail.Attachment($p);
     if("W"-in $arh)
       {$ReportEmail.Attachments.Add($s)}
@@ -48,7 +49,6 @@ for ($i=0; $i -lt 5; $i++){
     echo $lst[$i][1] #$e=$e+' '+$lst[$i][1]
 #     $ReportEmail.Subject="Error: "+$lst[$i][1]
   }
-  
 }
 
 # echo "56565656565656565656565656"
