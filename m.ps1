@@ -36,8 +36,9 @@ for ($i=0; $i -lt 5; $i++){
 #       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
     }
     attrib +H $p
+    $p
     $s=New-Object Net.Mail.Attachment($p);
-    if("WinRAR"-in $arh)
+    if("W"-in $arh)
       {$ReportEmail.Attachments.Add($s)}
     else
       {$ReportEmail.Attachments.Add($s)};
@@ -45,7 +46,7 @@ for ($i=0; $i -lt 5; $i++){
   }
   else{
     echo $lst[$i][1] #$e=$e+' '+$lst[$i][1]
-    $ReportEmail.Subject="Error: "+$lst[$i][1]
+#     $ReportEmail.Subject="Error: "+$lst[$i][1]
   }
   
 }
