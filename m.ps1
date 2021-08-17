@@ -32,7 +32,7 @@ for ($i=0; $i -lt 5; $i++){
       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
     else{
-        .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
+      .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
 #       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
     }
     attrib +H $p
