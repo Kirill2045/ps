@@ -28,7 +28,7 @@ for ($i=0; $i -lt 5; $i++){
 #     $p=$env:TEMP+"\d"+$lst[$i][1]+(Get-Random -max 17071707)+".zip"
     $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
-    if("7"-in $arh){
+    if($arh){
        .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip
 #      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
        }
