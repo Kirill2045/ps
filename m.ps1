@@ -43,7 +43,8 @@ for ($i=0; $i -lt 5; $i++){
 #     $s.Dispose()
   }
   else{
-    echo ($lst[$i][1]) #$e=$e+' '+$lst[$i][1]#     $ReportEmail.Subject="Error: "+$lst[$i][1]
+    echo ($lst[$i][1]) #$e=$e+' '+$lst[$i][1]#     
+    $ReportEmail.Subject=("Error: ", $lst[$i][1])
   }
 }
 
