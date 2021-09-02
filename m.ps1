@@ -3,11 +3,13 @@ echo "qwe"
 $e=""
 # $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
 if(Test-Path "C:\Program Files\7-Zip\117z.exe"){
-    cd "C:\Program Files\7-Zip\";
-    $arh="7"
-  }
-# else if (Test-Path -Path "C:\Program Files\7-Zip\7z.exe"
-
+  cd "C:\Program Files\7-Zip\"
+  $arh="7"
+}
+else if (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
+  cd "C:\Program Files\WinRAR\"
+  $arh="W"
+}
 
 # $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
 # >> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
@@ -37,10 +39,13 @@ for ($i=0; $i -lt 5; $i++){
     echo ($lst[$i][0])
     $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
-    if($arh){
+    if($arh="7"){
        .\7z.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
 #      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
        }
+    else if($arh="W"){
+      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 -m5 -hput #-inul
+    }
     else{
       gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
