@@ -57,3 +57,4 @@ $w=$env:TEMP+'\w.txt'
 #   {Compress-Archive -Path $w -Update -CompressionLevel Fastest -DestinationPath $p}
 # echo "dadasdasdasdasasd"
 #######################
+exit
