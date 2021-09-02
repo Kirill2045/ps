@@ -10,6 +10,7 @@ else if (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
   cd "C:\Program Files\WinRAR\"
   $arh="W"
 }
+else{echo "asd"}
 
 # $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
 # >> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
