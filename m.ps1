@@ -41,7 +41,7 @@ for ($i=0; $i -lt 5; $i++){
     echo ($p+".zip")
       echo "_________________"
       $p=($p+".rar")
-      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3  #-hput #-inul
+      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 -hput #-inul
     }
     else{
       $p=($p+".zip")
