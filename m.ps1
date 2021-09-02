@@ -6,7 +6,7 @@ if(Test-Path "C:\Program Files\7-Zip\117z.exe"){
   cd "C:\Program Files\7-Zip\"
   $arh="7"
 }
-else if (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
+elseif (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
   cd "C:\Program Files\WinRAR\"
   $arh="W"
 }
@@ -44,7 +44,7 @@ for ($i=0; $i -lt 5; $i++){
        .\7z.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
 #      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
        }
-    else if($arh="W"){
+    elseif($arh="W"){
       .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 -m5 -hput #-inul
     }
     else{
