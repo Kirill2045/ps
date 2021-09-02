@@ -38,7 +38,7 @@ for ($i=0; $i -lt 5; $i++){
     
     $s=New-Object Net.Mail.Attachment($p)
     $ReportEmail.Attachments.Add($s)
-    
+    echo "отправило!!!"
     $SMTPInfo.Send($ReportEmail)
 #     $s.Dispose()
   }
